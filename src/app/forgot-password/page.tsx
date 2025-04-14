@@ -18,7 +18,7 @@ function page() {
                             Reset your Password !
                         </h3>
                         <p className=" text-base font-normal text-black opacity-60 mt-[30px] text-center">
-                            please enter your {convercredentials.email} so we can provide you code to
+                            please enter your {convercredentials?.email} so we can provide you code to
                             reset your password .
                         </p>
                         <form onSubmit={onhandelsumit} className=" mt-[30px]">

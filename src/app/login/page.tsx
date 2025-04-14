@@ -1,10 +1,10 @@
 "use client"
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { HidePassIcon, ShowPassIcon } from "../components/Icon/Icon";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useSession, signIn, signOut } from "next-auth/react"
+import { signIn } from "next-auth/react"
 
 interface LoginUserType {
     email: string,
@@ -12,7 +12,7 @@ interface LoginUserType {
 }
 
 export default function page() {
-    
+
     const router = useRouter()
     const [error, setError] = useState<any>(null);
     const [showpassword, setShowPassword] = useState<boolean>(false);
@@ -20,6 +20,14 @@ export default function page() {
         email: "",
         password: "",
     });
+    
+    useEffect(() => {
+        const localstorage = localStorage.getItem("userlogin")
+        if (localstorage === "true") {
+            router.push("/dashboard")
+        }
+        else router.push("/login")
+    }, [])
 
     const onhandelchange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -27,22 +35,31 @@ export default function page() {
         setLoginUser({ ...loginuser, [name]: value });
     };
 
-    const onhandelsumit = (e: React.FormEvent<HTMLFormElement>) => {
+    const onhandelsumit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const credentials = localStorage.getItem("credentials")
-        const convercredentials = credentials ? JSON.parse(credentials) : null
-        if (convercredentials === null) setError("Your Account Not Found")
-        else if ((loginuser.email !== convercredentials?.email) || (loginuser.password !== convercredentials?.password)) setError("Somthing Went Wrong")
-        else {
-            setLoginUser({
-                email: "",
-                password: "",
-            })
-            localStorage.setItem("userlogin", "true")
-            router.push("/dashboard")
-        }
+        try {
+            const res = await signIn("credentials", {
+                redirect: false,
+                email: loginuser.email,
+                password: loginuser.password,
+            });
 
+            if (res?.error) {
+                setError("Invalid Credentials");
+                return;
+            } else {
+                localStorage.setItem("userlogin", "true");
+                setLoginUser({
+                    email: "",
+                    password: "",
+                });
+                router.push("/dashboard");
+            }
+        } catch (error) {
+            console.log(error);
+        }
     };
+
 
     return (
         <div className=" h-screen flex justify-center items-center">
@@ -120,7 +137,8 @@ export default function page() {
                             </button>
                             <button
                                 type="button"
-                                onClick={() => signIn("google")}
+                                onClick={() => (signIn("google"), localStorage.setItem("userlogin", "true"),
+                                    router.push("/dashboard"))}
                                 className="text-white text-sm sm:text-base font-medium py-2 sm:py-[14px] w-full bg-[#E77A3F] mt-4 sm:mt-[30px] rounded-[10px]"
                             >
                                 Login with Google

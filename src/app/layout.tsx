@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Sen } from "next/font/google";
 import "./globals.css";
-import SessionWrapper from "./components/other/SessionWrapper";
+import AuthProvider from "./authprovider/page";
 const Sans = Sen({
   subsets: ['latin'],
   weight: ['500', '400', '700', '800', '600'],
@@ -19,13 +19,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-        <body
-          className={`${Sans.className}  antialiased`}
-          >
-        <SessionWrapper>
+      <body
+        className={`${Sans.className}  antialiased`}
+      >
+        <AuthProvider>
           {children}
-          </SessionWrapper>
-        </body>
+        </AuthProvider>
+      </body>
     </html>
   );
 }
