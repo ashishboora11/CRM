@@ -12,8 +12,8 @@ const handler = NextAuth({
 
     GoogleProvider({
       clientId:
-        "1047720422533-d0rmqanptqvdr8g6uv6k4nom5028phir.apps.googleusercontent.com",
-      clientSecret: "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",
+        process.env.NEXT_PUBLIC_GOOGLE_ID as string,
+      clientSecret: process.env.NEXT_PUBLIC_GOOGLE_SECRET as string,
     }),
 
     //////////////   login user email or password     //////////////
