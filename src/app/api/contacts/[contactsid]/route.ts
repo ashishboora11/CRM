@@ -2,6 +2,8 @@ import { Contact } from "@/database/model/contacts";
 import mongoose from "mongoose";
 import { NextResponse } from "next/server";
 
+  //////////////////////////   get one contacts        ////////////////////////
+
 export async function GET(req: any, res: any) {
   try {
     await mongoose.connect(`${process.env.NEXT_PUBLIC_CONNECTIONSDB}`);
@@ -15,6 +17,9 @@ export async function GET(req: any, res: any) {
     );
   }
 }
+
+  //////////////////////////   update contacts        ////////////////////////
+
 export async function PATCH(req: any, res: any) {
      const payload = await req.json();
   try {
@@ -29,6 +34,9 @@ export async function PATCH(req: any, res: any) {
     );
   }
 }
+
+  //////////////////////////   delete contacts        ////////////////////////
+
 export async function DELETE(req: any, res: any) {
   try {
     await mongoose.connect(`${process.env.NEXT_PUBLIC_CONNECTIONSDB}`);

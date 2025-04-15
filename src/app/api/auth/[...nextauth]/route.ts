@@ -18,28 +18,24 @@ const handler = NextAuth({
 
     //////////////   login user email or password     //////////////
 
-    CredentialsProvider({
+     CredentialsProvider({
       name: "credentials",
       credentials: {},
       async authorize(credentials: any) {
         const { email, password } = credentials;
         try {
-          await mongoose.connect(`${process.env.NEXT_PUBLIC_CONNECTIONSDB}`);
+          await mongoose.connect(process.env.NEXT_PUBLIC_CONNECTIONSDB!);
           const user = await User.findOne({ email });
           if (!user) {
-            return null;
-          } else {
-            const paswordnotmatch = await bcrypt.compare(
-              password,
-              user.password
-            );
-            if (!paswordnotmatch) {
-              return null;
-            }
-            return user;
+            throw new Error("AccountNotFound");
           }
-        } catch (error) {
-          console.log(error);
+          const isPasswordValid = await bcrypt.compare(password, user.password);
+          if (!isPasswordValid) {
+            throw new Error("InvalidCredentials");
+          }
+          return user;
+        } catch (error: any) {
+          throw new Error(error.message || "LoginFailed");
         }
       },
     }),

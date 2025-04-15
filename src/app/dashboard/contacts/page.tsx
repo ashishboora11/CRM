@@ -26,7 +26,6 @@ const page = () => {
   const [filterdata, setFilterData] = useState<string>("");
   const [status, setStatus] = useState<string>("All");
   const [allcontacts, setAllContacts] = useState<Contact[]>([]);
-  //////////////////////////    delete customer       ////////////////////////
 
   //////////////////////////    Change Status driver       ////////////////////////
 
@@ -35,19 +34,22 @@ const page = () => {
     setDropdownOpen(false);
   };
 
-  async function GetContacts() {
-    try {
-      const getdata = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/contacts`);
-      const convertjson = await getdata.json();
-      setAllContacts(convertjson.response);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
+  //////////////////////////   get customer        ////////////////////////
+  
   useEffect(() => {
+    async function GetContacts() {
+      try {
+        const getdata = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/contacts`);
+        const convertjson = await getdata.json();
+        setAllContacts(convertjson.response);
+      } catch (error) {
+        console.log(error);
+      }
+    }
     GetContacts();
   }, []);
+
+  //////////////////////////   delete customer        ////////////////////////
 
   async function onhadeldelete(id: string) {
     try {
@@ -70,7 +72,7 @@ const page = () => {
       <div className="flex justify-end items-center">
         {/* SEARCH and filter */}
         <div className=" flex justify-end gap-5">
-          <div className="shadow-[0px_1px_3px_0px_#00000042] bg-white rounded-lg max-lg:p-[10px] p-[10px_15px] w-full max-lg:w-[40%] flex gap-x-2.5  ">
+          <div className="shadow-[0px_1px_3px_0px_#00000042] bg-white rounded-lg max-lg:p-[10px] p-[10px_15px] w-[350px] max-lg:w-[350px] flex gap-x-2.5  ">
             <SearchIcon />
             <input
               className="focus:outline-none bg-white w-[100%] text-base font-normal "

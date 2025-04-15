@@ -37,6 +37,8 @@ export default function page() {
 
     const onhandelsumit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setError(""); // Clear previous errors
+
         try {
             const res = await signIn("credentials", {
                 redirect: false,
@@ -44,21 +46,27 @@ export default function page() {
                 password: loginuser.password,
             });
 
-            if (res?.error) {
-                setError("Invalid Credentials");
+            if (res?.error === "AccountNotFound") {
+                setError("Account not found.");
                 return;
-            } else {
+            }
+
+            if (res?.error === "InvalidCredentials") {
+                setError("Invalid credentials.");
+                return;
+            }
+
+            if (res?.ok) {
                 localStorage.setItem("userlogin", "true");
-                setLoginUser({
-                    email: "",
-                    password: "",
-                });
+                setLoginUser({ email: "", password: "" });
                 router.push("/dashboard");
             }
         } catch (error) {
             console.log(error);
+            setError("Something went wrong. Please try again later.");
         }
     };
+
 
 
     return (

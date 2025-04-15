@@ -205,7 +205,7 @@ export function BackArrowIcon() {
             height="24"
             viewBox="0 0 24 24"
             fill="currentColor">
-            <text x="0" y="20" font-size="24">&#8592;</text>
+            <text x="0" y="20" fontSize="24">&#8592;</text>
         </svg>
 
     );

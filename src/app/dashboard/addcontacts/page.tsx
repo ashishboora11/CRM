@@ -106,6 +106,10 @@ const page = () => {
       if (data.result)
         alert(`Contacts ${id ? "Update" : "Add"} Successfully`),
           router.push("/dashboard/contacts");
+      
+      else {
+        setError(data.message)
+      }
     } catch (error) {
       console.log(error);
     }

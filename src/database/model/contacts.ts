@@ -1,7 +1,7 @@
-// import bcrypt from 'bcryptjs';
 import mongoose from 'mongoose';
 
 // Contact Schema
+
 const contactSchema = new mongoose.Schema(
   {
     Name: String,
@@ -19,6 +19,7 @@ const contactSchema = new mongoose.Schema(
 );
 
 // User Schema
+
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -33,6 +34,16 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+
+  resetToken: {
+    type: String,
+      required: false,
+  },
+
+  resetTokenExpiry:{
+      type: Date,
+      required: false,
+  }
 },{timestamps:true});
 
 export const Contact = mongoose.models.Contact || mongoose.model('Contact', contactSchema);

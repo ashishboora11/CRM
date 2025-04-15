@@ -16,8 +16,7 @@ export default function page() {
   const router = useRouter();
   const [error, setError] = useState<any>(null);
   const [showpassword, setShowPassword] = useState<boolean>(false);
-  const [confirmshowpassword, setConfirmShowPassword] =
-    useState<boolean>(false);
+  const [confirmshowpassword, setConfirmShowPassword] = useState<boolean>(false);
   const [signupuser, setSignUpUser] = useState<SignUpUserType>({
     name: "",
     email: "",
@@ -31,10 +30,12 @@ export default function page() {
     setSignUpUser({ ...signupuser, [name]: value });
   };
 
+  //////////////////////////   create your account        ////////////////////////
+
   const onhandelsumit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
-    if (signupuser.password.length < 8  || !/[A-Z]/.test(signupuser.password) || !/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(signupuser.password)) {
+ if (signupuser.password.length < 8 || !/[A-Z]/.test(signupuser.password) || !/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(signupuser.password)) {
       setError("Password must be at least 8 characters long and contain at least one one uppercase letter, one special character.");
     }
     else if (signupuser.password !== signupuser.confirmpassword) {
@@ -70,7 +71,7 @@ export default function page() {
         console.error("Error registering user:", error);
         setError("Something went wrong. Please try again.");
       }
- }
+    }
   };
 
 
