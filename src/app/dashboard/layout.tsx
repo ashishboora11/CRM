@@ -4,7 +4,7 @@ import Sidebar from "../components/Common/Sidebar";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import TopBar from "../components/Common/TopBar";
 
-function layout({ children }: any) {
+function Layout({ children }: any) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -21,7 +21,7 @@ function layout({ children }: any) {
         router.push("/dashboard");
       }
     } else router.push("/login");
-  }, []);
+  }, [pathname, router, id]);
   return (
     <div className="flex h-screen">
       <div className="sticky top-0 left-0 max-w-[400px] w-[400px] bg-gray-800 text-white py-4  z-50">
@@ -39,4 +39,4 @@ function layout({ children }: any) {
   );
 }
 
-export default layout;
+export default Layout;

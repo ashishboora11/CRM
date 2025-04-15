@@ -1,5 +1,4 @@
 "use client"
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { HidePassIcon, ShowPassIcon } from "../components/Icon/Icon";
 import Link from "next/link";
@@ -11,7 +10,7 @@ interface LoginUserType {
     password: string,
 }
 
-export default function page() {
+export default function Page() {
 
     const router = useRouter()
     const [error, setError] = useState<any>(null);
@@ -27,7 +26,7 @@ export default function page() {
             router.push("/dashboard")
         }
         else router.push("/login")
-    }, [])
+    }, [router])
 
     const onhandelchange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;

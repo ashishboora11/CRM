@@ -1,9 +1,9 @@
 import React from 'react'
 
-function page() {
+function Page() {
     return (
         <div>leads</div>
     )
 }
 
-export default page
+export default Page

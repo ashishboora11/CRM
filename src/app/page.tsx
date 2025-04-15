@@ -2,13 +2,13 @@
 import { useRouter } from 'next/navigation'
 import React, { useEffect } from 'react'
 
-function page() {
+function Page() {
   const router = useRouter()
   useEffect(() => {
     const localstorage = localStorage.getItem("userlogin")
     if (localstorage) router.push("/dashboard")
     else router.push("/login")
-  }, [])
+  }, [router])
 
   return (
     <div>
@@ -19,4 +19,4 @@ function page() {
   )
 }
 
-export default page
+export default Page

@@ -1,11 +1,10 @@
 "use client"
 import { User, Phone, Briefcase, Calendar, BarChart2, Settings, LogOut } from 'lucide-react';
-import { signOut, useSession } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 export default function Sidebar() {
     const router = useRouter()
-    const { data: session } = useSession();
     const pathname = usePathname()
 
     function onhadellogout() {

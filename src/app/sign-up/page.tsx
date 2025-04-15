@@ -12,7 +12,7 @@ interface SignUpUserType {
   confirmpassword: string;
 }
 
-export default function page() {
+export default function Page() {
   const router = useRouter();
   const [error, setError] = useState<any>(null);
   const [showpassword, setShowPassword] = useState<boolean>(false);

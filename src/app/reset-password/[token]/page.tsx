@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { HidePassIcon, ShowPassIcon } from "../../components/Icon/Icon";
 import { useParams, useRouter } from "next/navigation";
-function page() {
+function Page() {
   const { token } = useParams();
   const [error, setError] = useState<string>("");
   const [resetpassword, setResetPassword] = useState<string>("");
@@ -141,4 +141,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;

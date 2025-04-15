@@ -1,7 +1,7 @@
 "use client"
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
-function page() {
+function Page() {
     const router = useRouter();
     const [error, setError] = useState<any>(null);
     const [emailmsg, setEmailmsg] = useState<string>("");
@@ -83,4 +83,4 @@ function page() {
     )
 }
 
-export default page
+export default Page

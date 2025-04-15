@@ -13,7 +13,7 @@ interface Contact {
   status: any;
 }
 
-const page = () => {
+const Page = () => {
   const [error, setError] = useState<any>("");
   const [inputdata, setInputdata] = useState<Contact>({
     Name: "",
@@ -304,4 +304,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

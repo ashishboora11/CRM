@@ -20,7 +20,7 @@ interface Contact {
   createdAt: string
 }
 
-const page = () => {
+const Page = () => {
   const dropdownRef = useRef(null);
   const [DropdownOpen, setDropdownOpen] = useState<any>(false);
   const [filterdata, setFilterData] = useState<string>("");
@@ -58,7 +58,7 @@ const page = () => {
       });
       const data = await response.json();
       const filterdata = allcontacts.filter(
-        (value, index, array) => value._id !== id
+        (value) => value._id !== id
       );
       setAllContacts(filterdata);
       if (data.result) alert(`Contacts detete Successfully`);
@@ -178,7 +178,7 @@ const page = () => {
             <tbody className="scroll-smooth">
               {allcontacts
                 .filter((value) => value.Name.includes(filterdata))
-                .filter((value, index, array) => {
+                .filter((value) => {
                   if (status === "Active") {
                     return value.status === true;
                   } else if (status === "Inactive") {
@@ -252,4 +252,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
