@@ -40,7 +40,6 @@ export default function page() {
     }
     else if (signupuser.password !== signupuser.confirmpassword) {
       setError("Passwords do not match");
-      return;
     }
     else {
       try {
