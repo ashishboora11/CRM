@@ -14,7 +14,7 @@ export default function Sidebar() {
     }
 
     return (
-        <aside className=' flex flex-col h-full gap-5'>
+        <aside className=' flex flex-col h-full gap-5 w-full'>
             <h2 className="text-2xl font-bold  pt-3 ps-6">Dashboard</h2>
             <ul className="flex flex-col justify-around h-full grow">
                 <li>

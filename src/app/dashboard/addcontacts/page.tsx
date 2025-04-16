@@ -48,7 +48,7 @@ const Page = () => {
         console.log(error);
       }
     }
-    GetContacts();
+    if (id !== null) GetContacts();
   }, [id]);
 
   //////////////////////////   rest state       ////////////////////////
@@ -106,7 +106,7 @@ const Page = () => {
       if (data.result)
         alert(`Contacts ${id ? "Update" : "Add"} Successfully`),
           router.push("/dashboard/contacts");
-      
+
       else {
         setError(data.message)
       }

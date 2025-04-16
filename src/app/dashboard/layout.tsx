@@ -1,30 +1,32 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { Suspense, useEffect } from "react";
 import Sidebar from "../components/Common/Sidebar";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import TopBar from "../components/Common/TopBar";
 
-function Layout({ children }: any) {
+
+function MainLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
 
-  //////////////////////////   check user login  or not        ////////////////////////
-
   useEffect(() => {
     const localstorage = localStorage.getItem("userlogin");
     if (localstorage === "true") {
       if (pathname.startsWith("/dashboard")) {
-        router.push(`${id ? `${pathname}?id=${id}` : pathname} `);
+        router.push(`${id ? `${pathname}?id=${id}` : pathname}`);
       } else {
         router.push("/dashboard");
       }
-    } else router.push("/login");
+    } else {
+      router.push("/login");
+    }
   }, [pathname, router, id]);
+
   return (
     <div className="flex h-screen">
-      <div className="sticky top-0 left-0 max-w-[400px] w-[400px] bg-gray-800 text-white py-4  z-50">
+      <div className="sticky top-0 left-0 max-w-[400px] w-[400px] bg-gray-800 text-white py-4 z-50">
         <Sidebar />
       </div>
       <div className="flex flex-col grow">
@@ -39,4 +41,10 @@ function Layout({ children }: any) {
   );
 }
 
-export default Layout;
+export default function Layout({ children }: { children: React.ReactNode }) {
+  return (
+    <Suspense fallback={<div>Loading layout...</div>}>
+      <MainLayout>{children}</MainLayout>
+    </Suspense>
+  );
+}
