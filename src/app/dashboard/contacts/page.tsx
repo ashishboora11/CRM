@@ -39,7 +39,7 @@ const Page = () => {
   useEffect(() => {
     async function GetContacts() {
       try {
-        const getdata = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/contacts`);
+        const getdata = await fetch(`/api/contacts`);
         const convertjson = await getdata.json();
         setAllContacts(convertjson.response);
       } catch (error) {
@@ -53,7 +53,7 @@ const Page = () => {
 
   async function onhadeldelete(id: string) {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/contacts/${id}`, {
+      const response = await fetch(`/api/contacts/${id}`, {
         method: "DELETE",
       });
       const data = await response.json();

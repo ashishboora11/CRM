@@ -10,7 +10,7 @@ function Page() {
     const onhandelsumit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/forget-password`, {
+            const res = await fetch(`/api/forget-password`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

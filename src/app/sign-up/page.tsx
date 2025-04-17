@@ -43,7 +43,7 @@ export default function Page() {
     }
     else {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/register`, {
+        const res = await fetch(`/api/register`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

@@ -16,7 +16,7 @@ function Page() {
     const checkverifiedtoken = async () => {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVER_URL}/api/verify-token`,
+          `/api/verify-token`,
           {
             method: "POST",
             headers: {
@@ -58,7 +58,7 @@ function Page() {
     } else {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVER_URL}/api/change-password`,
+          `/api/change-password`,
           {
             method: "POST",
             headers: {

@@ -33,7 +33,7 @@ export async function POST(req: any) {
 
   //////////////////////////   send gmail verfication        ////////////////////////
 
-    const reseturl = `${process.env.NEXT_PUBLIC_SERVER_URL}/reset-password/${resttoken}`;
+    const reseturl = `/reset-password/${resttoken}`;
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {

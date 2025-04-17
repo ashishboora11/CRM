@@ -32,7 +32,7 @@ const Page = () => {
   useEffect(() => {
     async function GetContacts() {
       try {
-        const getdata = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/contacts/${id}`);
+        const getdata = await fetch(`/api/contacts/${id}`);
         const convertjson = await getdata.json();
         const { Address1, Business, Email_Address, Mobile, Name, status } =
           convertjson.response;
@@ -92,7 +92,7 @@ const Page = () => {
     }
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/contacts${id ? `/${id}` : ""}`,
+        `/api/contacts${id ? `/${id}` : ""}`,
         {
           method: id ? "PATCH" : "POST",
           body: JSON.stringify(inputdata),
