@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    await mongoose.connect(`${process.env.NEXT_PUBLIC_CONNECTIONSDB}`);
+    await mongoose.connect(`${process.env.MONGODB_URI}`);
     const data = await Contact.find();
     return NextResponse.json({ result: true, response: data }, { status: 200 });
   } catch (error: any) {
@@ -23,7 +23,7 @@ export async function GET() {
 export async function POST(req: any) {
   try {
     const payload = await req.json();
-    await mongoose.connect(`${process.env.NEXT_PUBLIC_CONNECTIONSDB}`);
+    await mongoose.connect(`${process.env.MONGODB_URI}`);
     const existingUser = await Contact.findOne({ Email_Address: payload.Email_Address });
     if (existingUser) {
       return NextResponse.json(

@@ -1,44 +1,31 @@
-"use client"
-import { useRouter } from 'next/navigation';
-import React, { useState } from 'react'
+"use client";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../store/store";
+import { forgetpassword } from "../store/slice";
 function Page() {
     const router = useRouter();
+    const dispatch = useDispatch<AppDispatch>();
     const [error, setError] = useState<any>(null);
     const [emailmsg, setEmailmsg] = useState<string>("");
 
-
     const onhandelsumit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        try {
-            const res = await fetch(`/api/forget-password`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ email: emailmsg }),
-            });
-
-            const data = await res.json();
-            if (!res.ok) {
-                setError(data.message || "forget-password failed");
-                return;
-            }
-            else {
-                setEmailmsg("")
-                alert("check your gmail")
-                router.push("/login")
-            }
-
-        } catch (error) {
-            console.error("Error forget-password user:", error);
-            setError("Something went wrong. Please try again.");
+        const resultAction = await dispatch(forgetpassword({ email: emailmsg }));
+        if (forgetpassword.fulfilled.match(resultAction)) {
+            setError("");
+            setEmailmsg("");
+            alert("check your gmail");
+            router.push("/login");
+        } else {
+            const errorMsg = resultAction.payload as string;
+            setError(errorMsg);
         }
-
     };
 
-
     return (
-        <div className=' h-screen flex justify-center items-center'>
+        <div className=" h-screen flex justify-center items-center">
             <div className="container px-3 mx-auto">
                 <div className="flex items-center justify-center">
                     <div className="w-full sm:w-10/12 md:w-8/12 lg:w-6/12 xl:w-4/12 pb-[30px] sm:py-[30px]">
@@ -46,8 +33,8 @@ function Page() {
                             Forget your Password !
                         </h3>
                         <p className=" text-base font-normal text-black opacity-60 mt-[30px] text-center">
-                            please enter your email so we can provide you code to
-                            reset your password .
+                            please enter your email so we can provide you code to reset your
+                            password .
                         </p>
                         <form onSubmit={onhandelsumit} className=" mt-[30px]">
                             <div className="flex items-center gap-3 rounded-[10px] px-5 bg-[#F4F4F4]">
@@ -56,7 +43,9 @@ function Page() {
                                     required
                                     value={emailmsg}
                                     name="emailmsg"
-                                    onChange={(e) => (setEmailmsg(e.target.value), setError(null))}
+                                    onChange={(e) => (
+                                        setEmailmsg(e.target.value), setError(null)
+                                    )}
                                     placeholder="Enter your Email ID"
                                     className="w-full rounded-[10px] text-black text-sm font-normal sm:placeholder:text-base placeholder:text-black placeholder:font-normal placeholder:text-sm sm:text-base bg-[#F4F4F4] py-[13px] outline-none"
                                 />
@@ -80,7 +69,7 @@ function Page() {
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
-export default Page
+export default Page;

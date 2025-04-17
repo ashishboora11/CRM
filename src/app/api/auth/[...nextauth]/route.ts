@@ -24,7 +24,7 @@ const handler = NextAuth({
       async authorize(credentials: any) {
         const { email, password } = credentials;
         try {
-          await mongoose.connect(process.env.NEXT_PUBLIC_CONNECTIONSDB!);
+       await mongoose.connect(`${process.env.MONGODB_URI}`);
           const user = await User.findOne({ email });
           if (!user) {
             throw new Error("AccountNotFound");

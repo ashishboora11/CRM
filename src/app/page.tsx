@@ -1,8 +1,9 @@
 "use client"
 import { useRouter } from 'next/navigation'
 import React, { useEffect } from 'react'
+import Loader from './components/Common/Loader'
 
-function Page() {
+function Page({ children }: any) {
   const router = useRouter()
   useEffect(() => {
     const localstorage = localStorage.getItem("userlogin")
@@ -12,9 +13,8 @@ function Page() {
 
   return (
     <div>
-      <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/20">
-        <div className="w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin" />
-      </div>
+          <Loader />
+          {children}
     </div>
   )
 }

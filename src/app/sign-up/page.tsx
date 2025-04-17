@@ -1,9 +1,11 @@
 "use client";
-import Image from "next/image";
 import React, { useState } from "react";
 import { HidePassIcon, ShowPassIcon } from "../components/Icon/Icon";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { registerUser } from "../store/slice";
+import { AppDispatch } from "../store/store";
 
 interface SignUpUserType {
   name: string;
@@ -14,6 +16,8 @@ interface SignUpUserType {
 
 export default function Page() {
   const router = useRouter();
+  const dispatch = useDispatch<AppDispatch>()
+
   const [error, setError] = useState<any>(null);
   const [showpassword, setShowPassword] = useState<boolean>(false);
   const [confirmshowpassword, setConfirmShowPassword] = useState<boolean>(false);
@@ -35,28 +39,15 @@ export default function Page() {
   const onhandelsumit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
- if (signupuser.password.length < 8 || !/[A-Z]/.test(signupuser.password) || !/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(signupuser.password)) {
+    if (signupuser.password.length < 8 || !/[A-Z]/.test(signupuser.password) || !/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(signupuser.password)) {
       setError("Password must be at least 8 characters long and contain at least one one uppercase letter, one special character.");
     }
     else if (signupuser.password !== signupuser.confirmpassword) {
       setError("Passwords do not match");
     }
     else {
-      try {
-        const res = await fetch(`/api/register`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(signupuser),
-        });
-
-        const data = await res.json();
-
-        if (!res.ok) {
-          setError(data.message || "Registration failed");
-          return;
-        }
+      const resultAction = await dispatch(registerUser(signupuser));
+      if (registerUser.fulfilled.match(resultAction)) {
         localStorage.setItem("userlogin", "true");
         setSignUpUser({
           name: "",
@@ -65,10 +56,11 @@ export default function Page() {
           confirmpassword: "",
         });
         router.push("/dashboard");
+      } else {
+        const errorMsg = resultAction.payload as string;
+        console.log(errorMsg);
 
-      } catch (error) {
-        console.error("Error registering user:", error);
-        setError("Something went wrong. Please try again.");
+        setError(errorMsg);
       }
     }
   };

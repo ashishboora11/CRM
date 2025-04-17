@@ -8,7 +8,7 @@ import bcrypt from "bcryptjs";
 export async function POST(req: any) {
   try {
     const { name, email, password } = await req.json();
-    await mongoose.connect(`${process.env.NEXT_PUBLIC_CONNECTIONSDB}`);
+    await mongoose.connect(`${process.env.MONGODB_URI}`);
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return NextResponse.json(

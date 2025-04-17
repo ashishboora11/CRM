@@ -8,7 +8,7 @@ import { NextResponse } from "next/server";
 export async function POST(req: any) {
   try {
     const { token } = await req.json();
-    await mongoose.connect(`${process.env.NEXT_PUBLIC_CONNECTIONSDB}`);
+    await mongoose.connect(`${process.env.MONGODB_URI}`);
     const hashtoken = crypto.createHash("sha256").update(token).digest("hex");
     const usertoken = await User.findOne({
       resetToken: hashtoken,

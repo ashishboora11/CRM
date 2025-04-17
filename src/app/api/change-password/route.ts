@@ -7,7 +7,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: any) {
   const { password, email } = await req.json();
-  await mongoose.connect(`${process.env.NEXT_PUBLIC_CONNECTIONSDB}`);
+  await mongoose.connect(`${process.env.MONGODB_URI}`);
 
   const existinguser = await User.findOne({ email });
   const hashedPassword = await bcrypt.hash(password, 10);

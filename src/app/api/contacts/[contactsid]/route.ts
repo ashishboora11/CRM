@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 
 export async function GET(req: any, res: any) {
   try {
-    await mongoose.connect(`${process.env.NEXT_PUBLIC_CONNECTIONSDB}`);
+    await mongoose.connect(`${process.env.MONGODB_URI}`);
       const data = await Contact.findById( res.params.contactsid);      
     return NextResponse.json({ result: true, response: data }, { status: 200 });
   } catch (error: any) {
@@ -23,7 +23,7 @@ export async function GET(req: any, res: any) {
 export async function PATCH(req: any, res: any) {
      const payload = await req.json();
   try {
-    await mongoose.connect(`${process.env.NEXT_PUBLIC_CONNECTIONSDB}`);
+    await mongoose.connect(`${process.env.MONGODB_URI}`);
       const data = await Contact.findByIdAndUpdate( res.params.contactsid , {...payload , _id:res.params.contactsid});      
     return NextResponse.json({ result: true, response: data }, { status: 200 });
   } catch (error: any) {
@@ -39,7 +39,7 @@ export async function PATCH(req: any, res: any) {
 
 export async function DELETE(req: any, res: any) {
   try {
-    await mongoose.connect(`${process.env.NEXT_PUBLIC_CONNECTIONSDB}`);
+    await mongoose.connect(`${process.env.MONGODB_URI}`);
       const data = await Contact.findByIdAndDelete( res.params.contactsid);      
     return NextResponse.json({ result: true, response: data }, { status: 200 });
   } catch (error: any) {
